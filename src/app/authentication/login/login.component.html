@@ -11,9 +11,9 @@
                         <!-- col full-->
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <mat-form-field>
-                                <input matInput placeholder="Username" [formControl]="form.controls['uname']">
+                                <input matInput placeholder="email" [formControl]="form.controls['email']">
                             </mat-form-field>
-                            <small *ngIf="form.controls['uname'].hasError('required') && form.controls['uname'].touched" class="text-danger support-text">Usuario es requerido.</small>
+                            <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="text-danger support-text">Email es requerido.</small>
                         </div>
                         <!-- col full-->
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
