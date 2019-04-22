@@ -25,6 +25,10 @@ export const AppRoutes: Routes = [
         loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
       {
+        path: 'asistentes',
+        loadChildren: './asistentes/asistentes.module#AsistentesModule'
+      },
+      {
         path: 'icons',
         loadChildren: './icons/mat-icon.module#IconsModule'
       }

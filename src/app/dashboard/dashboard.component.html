@@ -1,7 +1,7 @@
 <!-- ============================================================== -->
 <!-- Simple four boxes Row -->
 <!-- ============================================================== -->
-<div fxLayout="row" fxLayoutWrap="wrap">
+<div fxLayout="row wrap">
     <!-- column -->
     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
@@ -10,13 +10,112 @@
                 <div fxLayout="row" fxLayoutWrap="wrap">
                     <!-- column -->
                     <div fxFlex.gt-sm="50" fxFlex.gt-xs="50">
-                        SMARTHUB TECHNOLOGIES
+                        {{currentUser.equipo.name}} - {{currentUser.email}}  <!--SMARTHUB TECHNOLOGIES-->
                     </div>
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- column -->
+    <!-- /column -->
 </div>
+
+<!-- ============================================================== -->
+<!-- Chart boxes -->
+<!-- ============================================================== -->
+<!-- row -->
+<div fxLayout="row">
+    <!-- column -->
+    <div fxFlex.gt-sm="33.33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card class="bg-info">
+            <mat-card-content>
+                <!-- column -->
+                <div class="d-flex no-block align-items-center">
+                    <div class="stats">
+                        <h3 class="text-white m-0">Asistentes</h3>
+                        <h6 class="text-white m-t-0">Abril 2019</h6>
+                        <h1 class="text-white m-0">1268</h1>
+                    </div>
+                    <div class="spark-count ml-auto"></div>
+                </div>
+                <!-- /column -->
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- /column -->
+    <!-- column -->
+    <div fxFlex.gt-sm="33.33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card class="bg-purple">
+            <mat-card-content>
+                <!-- column -->
+                <div class="d-flex no-block align-items-center">
+                    <div class="stats">
+                        <h3 class="text-white m-0">Partidos Jugados</h3>
+                        <h6 class="text-white m-t-0">Abril 2019</h6>
+                        <h1 class="text-white m-0">3</h1>
+                    </div>
+                    <div class="spark-count ml-auto"></div>
+                </div>
+                <!-- /column -->
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- /column -->
+    <!-- column -->
+    <div fxFlex.gt-sm="33.33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card class="bg-success">
+            <mat-card-content>
+                <!-- column -->
+                <div class="d-flex no-block align-items-center">
+                    <div class="stats">
+                        <h3 class="text-white m-0">Income</h3>
+                        <h6 class="text-white m-t-0">March 2017</h6>
+                        <h1 class="text-white m-0">35487</h1>
+                    </div>
+                    <div class="spark-count ml-auto"></div>
+                </div>
+                <!-- /column -->
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- /column -->
+
+</div>
+<!-- /row -->
+
+
+
+
+<div fxLayout="row wrap">
+
+    <!-- Column-->
+    <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>Asistentes por año</mat-card-title>
+                <mat-card-subtitle>Comparacion entre año y presente y año pasado</mat-card-subtitle>
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                        [chartType]="barChartType" (chartHover)="chartHovered($event)" [colors]="barChartColors" (chartClick)="chartClicked($event)">
+                </canvas>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- /Column-->
+
+    <!-- Column Pie Chart (chartjs)-->
+    <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>Asistentes</mat-card-title>
+                <mat-card-subtitle>Porcentaje de genero por asistentes</mat-card-subtitle>
+                <canvas baseChart height="150px" [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)" [colors]="[{backgroundColor: ['#1976d2', '#26dad2', '#dadada']}]">
+                </canvas>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- /Column-->
+</div>
+
+
 
 
