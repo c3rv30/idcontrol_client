@@ -1,9 +1,9 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AuthenticationService } from '../_services';
+import { AuthenticationService } from '../_services/authentication';
 
-import { User } from '../_models';
+import { User } from '../_models/user';
 
 @Component({
   selector: 'app-dashboard',

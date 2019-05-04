@@ -7,7 +7,8 @@ import {
   FormControl
 } from '@angular/forms';
 
-import { AlertService, AuthenticationService } from '../../_services';
+import { AlertService } from '../../_services/alert';
+import { AuthenticationService } from '../../_services/authentication';
 import { first } from 'rxjs/operators';
 
 @Component({

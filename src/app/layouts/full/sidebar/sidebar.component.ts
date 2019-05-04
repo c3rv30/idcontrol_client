@@ -16,13 +16,11 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import {
-    AlertService,
-    AuthenticationService,
-    UserService
-} from '../../../_services';
+import { AlertService } from '../../../_services/alert';
+import { AuthenticationService } from '../../../_services/authentication';
+import { UserService} from '../../../_services/user';
 
-import { User } from '../../../_models';
+import { User } from '../../../_models/user';
 
 import { MenuItems } from '../../../shared/menu-items/menu-items';
 

@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
-import { User } from '../_models';
+import { environment } from '../../../environments/environment';
+import { User } from '../../_models/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -20,7 +20,7 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(email: string, password: string) {
+    public login(email: string, password: string) {
         // return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
         return this.http.post<any>(`${environment.apiUrl}/signin`, { email, password })
             .pipe(map(user => {
@@ -35,7 +35,7 @@ export class AuthenticationService {
             }));
     }
 
-    logout() {
+    public logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);

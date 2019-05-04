@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from '../../environments/environment';
-import { User } from '../_models';
+import { environment } from '../../../environments/environment';
+import { Asistente } from '../../_models/asistente';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class AsistenteService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
+        return this.http.get<Asistente[]>(`${environment.apiUrl}/asiscounts`);
     }
 
+    getByEquipo(equipo: Asistente) {
+        return this.http.post(`${environment.apiUrl}/asiscounts`, equipo);
+    }
+
+
+    /*
     getById(id: number) {
         return this.http.get(`${environment.apiUrl}/users/${id}`);
     }
@@ -27,4 +33,5 @@ export class UserService {
     delete(id: number) {
         return this.http.delete(`${environment.apiUrl}/users/${id}`);
     }
+    */
 }
