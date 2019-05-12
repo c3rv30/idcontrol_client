@@ -30,13 +30,12 @@ import { MenuItems } from '../../../shared/menu-items/menu-items';
   styleUrls: []
 })
 export class AppSidebarComponent implements OnDestroy, OnInit {
+  public currentUser: any;
   public config: PerfectScrollbarConfigInterface = {};
   mobileQuery: MediaQueryList;
-  currentUser: User;
   currentUserSubscription: Subscription;
-  users: User[] = [];
 
-  private _mobileQueryListener: () => void;
+  private readonly _mobileQueryListener: () => void;
 
   constructor(
     private router: Router,
@@ -49,31 +48,30 @@ export class AppSidebarComponent implements OnDestroy, OnInit {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-      this.currentUser = user;
-      console.log(this.currentUser);
-    });
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnInit() {
+    // console.log(this.currentUser);
     // this.loadAllUsers();
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
     // unsubscribe to ensure no memory leaks
-    this.currentUserSubscription.unsubscribe();
+    // this.currentUserSubscription.unsubscribe();
   }
 
-  private loadAllUsers() {
+  public logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/authentication/login']);
+  }
+
+  /* private loadAllUsers() {
     this.userService.getAll().pipe(first()).subscribe(() => {
       this.loadAllUsers();
     });
   }
-
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/authentication/login']);
-  }
+  */
 
 }

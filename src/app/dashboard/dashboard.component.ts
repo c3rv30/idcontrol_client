@@ -1,9 +1,10 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { AsistenteService } from '../_services/asistente';
 
-import { AuthenticationService } from '../_services/authentication';
-
-import { User } from '../_models/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,17 +12,18 @@ import { User } from '../_models/user';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements AfterViewInit, OnInit {
-    currentUser: User;
-    currentUserSubscription: Subscription;
+    public currentUser: any;
+    public equipo: string;
+
+    public dataToBarChart: any[];
+    public barChartDatan: any[];
+
+    public barChartData: any[];
+
     // Chart js
     subtitle: string;
-    constructor(
-        private authenticationService: AuthenticationService,
-    ) {
-        this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-            this.currentUser = user;
-            // console.log(this.currentUser.equipo);
-        });
+    constructor(private http: HttpClient, private _asistService: AsistenteService) {
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.subtitle = 'This is chart page.';
     }
 
@@ -47,13 +49,12 @@ export class DashboardComponent implements AfterViewInit, OnInit {
         'Noviembre',
         'Diciembre'
     ];
+
     public barChartType = 'bar';
     public barChartLegend = true;
 
-    public barChartData: any[] = [
-        { data: [65, 59, 80, 81, 56, 55, 40, 80, 81, 56, 55, 40], label: '2018' },
-        { data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86], label: '2019' }
-    ];
+
+
     public barChartColors: Array<any> = [
         { backgroundColor: '#1976d2' },
         { backgroundColor: '#26dad2' }
@@ -88,9 +89,9 @@ export class DashboardComponent implements AfterViewInit, OnInit {
             Math.random() * 100,
             40
         ];
-        const clone = JSON.parse(JSON.stringify(this.barChartData));
-        clone[0].data = data;
-        this.barChartData = clone;
+        // const clone = JSON.parse(JSON.stringify(this.barChartData));
+        // clone[0].data = data;
+        // this.barChartData = clone;
         /**
          * (My guess), for Angular to recognize the change in the dataset
          * it has to change the dataset variable directly,
@@ -99,8 +100,11 @@ export class DashboardComponent implements AfterViewInit, OnInit {
          */
     }
 
-    ngOnInit(): void {
-
+    ngOnInit() {
+        if (this.currentUser.roleUser === 'ROLE_USER') {
+            this.equipo = this.currentUser.equipo.name;
+            this.getAllAsist();
+        }
     }
 
     ngAfterViewInit() {
@@ -126,5 +130,24 @@ export class DashboardComponent implements AfterViewInit, OnInit {
             sparkResize = setTimeout(sparklineLogin, 500);
         });
         sparklineLogin();
+    }
+
+    public getAllAsist() {
+        const lasTyear = [];
+        const currentTyear = [];
+        this._asistService.getAsisByEquipo( this.equipo )
+            .subscribe(result => {
+                result.lastYearArray.forEach(function(elem) {
+                    lasTyear.push(elem.count);
+                });
+                result.currentYearArray.forEach(function(elem) {
+                    currentTyear.push(elem.count);
+                });
+            });
+        this.barChartData = [
+            { data: lasTyear, label: '2018' },
+            { data: currentTyear, label: '2019' }
+        ];
+        // [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86]
     }
 }

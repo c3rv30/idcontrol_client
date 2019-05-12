@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 import { Asistente } from '../../_models/asistente';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AsistenteService {
@@ -12,8 +13,11 @@ export class AsistenteService {
         return this.http.get<Asistente[]>(`${environment.apiUrl}/asiscounts`);
     }
 
-    getByEquipo(equipo: Asistente) {
-        return this.http.post(`${environment.apiUrl}/asiscounts`, equipo);
+    getAsisByEquipo(equipo: string) {
+        return this.http.post<any>(`${environment.apiUrl}/asiscounts`, { equipo })
+            .pipe(map( res => {
+                return res;
+            }));
     }
 
 
