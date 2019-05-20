@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 import { Asistente } from '../../_models/asistente';
 import { map } from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AsistenteService {
@@ -20,12 +21,10 @@ export class AsistenteService {
             }));
     }
 
-
-    /*
-    getById(id: number) {
-        return this.http.get(`${environment.apiUrl}/users/${id}`);
+    getByRut(rut: string, equipo: string, fec?: string): Observable<any> {
+        return this.http.post<Element[]>(`${environment.apiUrl}/getasis`, { rut, equipo, fec });
     }
-
+     /*
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/users/register`, user);
     }
@@ -38,4 +37,12 @@ export class AsistenteService {
         return this.http.delete(`${environment.apiUrl}/users/${id}`);
     }
     */
+}
+
+
+export interface Element {
+    _id: string;
+    rut: string;
+    equipo: string;
+    fecha: string;
 }

@@ -14,10 +14,6 @@ import { AsistenteService } from '../_services/asistente';
 export class DashboardComponent implements AfterViewInit, OnInit {
     public currentUser: any;
     public equipo: string;
-
-    public dataToBarChart: any[];
-    public barChartDatan: any[];
-
     public barChartData: any[];
 
     // Chart js
@@ -52,9 +48,6 @@ export class DashboardComponent implements AfterViewInit, OnInit {
 
     public barChartType = 'bar';
     public barChartLegend = true;
-
-
-
     public barChartColors: Array<any> = [
         { backgroundColor: '#1976d2' },
         { backgroundColor: '#26dad2' }
