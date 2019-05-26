@@ -9,13 +9,14 @@
                 <!-- ============================================================== -->
                 <!-- column -->
                 <!-- ============================================================== -->
-                <form class="basic-form">
+                <form class="basic-form" [formGroup]="form" (ngSubmit)="onSubmit()">
                     <div fxLayout="row wrap">
                         <!-- column -->
                         <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
                             <mat-form-field>
-                                <input #input matInput placeholder="Ingrese rut de asistente">
+                                <input matInput minlength="8" placeholder="Ingrese rut de asistente" required [formControl]="form.controls['inputRut']">
                             </mat-form-field>
+                            <small *ngIf="form.controls['inputRut'].hasError('required') && form.controls['inputRut'].touched" class="text-danger support-text">Rut es requerido.</small>
                         </div>
                         <!-- /column -->
 
@@ -29,7 +30,8 @@
 
                         <!-- column -->
                         <div fxFlex.gt-sm="100" fxFlex="100">
-                            <button mat-raised-button color="primary" required>Buscar</button>
+                            <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">Buscar</button>
+                            <!-- [disabled]="!form.valid"   -->
                         </div>
                         <!-- /column -->
                     </div>
@@ -38,25 +40,10 @@
         </mat-card>
     </div>
 </div>
-
-<!--
-<div fxLayout="row wrap">
-    <div fxFlex.gt-sm="100" fxFlex="100">
-        <mat-card>
-            <mat-card-content>
-                <mat-card-title>Resultado de Busqueda..</mat-card-title>
-                <h5>Asistente encontrado sdakjhhgjdshgkjdsjhkdsfjkl</h5>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</div>
--->
-
 <!-- ============================================================== -->
 <!-- PROGRESS BAR -->
 <!-- ============================================================== -->
-
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" *ngIf="loadingProgressBar">
     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
             <mat-card-content>
@@ -68,7 +55,7 @@
 <!-- ============================================================== -->
 <!-- PAGINATION TABLE -->
 <!-- ============================================================== -->
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" *ngIf="loadingTable">
     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
             <mat-card-content>

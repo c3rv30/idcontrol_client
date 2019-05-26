@@ -1,6 +1,18 @@
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
+<!-- main app container -->
+
 <router-outlet>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 offset-sm-3">
+                    <app-alert></app-alert>
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
     <app-spinner></app-spinner>
 </router-outlet>

@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AlertService } from '../../_services/alert';
 import { AuthenticationService } from '../../_services/authentication';
@@ -62,7 +57,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        data => {
+          data => {
           this.router.navigate([this.returnUrl]);
         },
         error => {

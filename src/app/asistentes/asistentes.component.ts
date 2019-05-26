@@ -1,14 +1,12 @@
 import { Component, AfterViewInit, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter, MatPaginator, MatTableDataSource } from '@angular/material';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AsistenteService } from '../_services/asistente';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 export interface Element {
-
     rut: string;
     equipo: string;
     fecha: string;
@@ -20,19 +18,24 @@ export interface Element {
     styleUrls: ['./asistentes.component.scss']
 })
 export class AsistentesComponent implements AfterViewInit, OnInit {
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    public form: FormGroup;
+
     /* pagination table */
     ELEMENT_DATA: Element[] = [];
     displayedColumns = ['rut', 'equipo', 'fecha'];
     dataSource;
 
-    options: FormGroup;
-    public currentUser: any;
-    public equipo: string;
-    public rut: string;
-    public fec: string;
+    currentUser: any;
+    equipo: string;
+
+    // progress bar
+    loadingProgressBar: boolean;
+    // table
+    loadingTable: boolean;
 
     // For form validator
-    email = new FormControl('', [Validators.required, Validators.email]);
+    // inputRut = new FormControl('', [Validators.required]);
 
     // Sufix and prefix
     hide = true;
@@ -62,15 +65,18 @@ export class AsistentesComponent implements AfterViewInit, OnInit {
         // tslint:disable-next-line:semicolon
     };
 
-    constructor(fb: FormBuilder, private adapter: DateAdapter<any>,
-                private http: HttpClient,
-                private _asistService: AsistenteService,
-                breakpointObserver: BreakpointObserver) {
+    constructor(
+        private fb: FormBuilder,
+        private adapter: DateAdapter<any>,
+        private http: HttpClient,
+        private _asistService: AsistenteService,
+        private breakpointObserver: BreakpointObserver
+    ) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.options = fb.group({
-            hideRequired: false,
-            floatLabel: 'auto'
-        });
+       // this.form = fb.group({
+       //     hideRequired: false,
+       //     floatLabel: 'auto'
+       // });
         breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
             this.displayedColumns = result.matches ?
                 ['rut', 'equipo', 'fecha'] :
@@ -78,39 +84,56 @@ export class AsistentesComponent implements AfterViewInit, OnInit {
         });
     }
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-
     ngAfterViewInit(): void {
-        this.getByRut();
+        // this.getByRut();
     }
 
     ngOnInit(): void {
+        this.form = this.fb.group({
+            inputRut: [null, Validators.compose([Validators.required])],
+            fec: [null],
+        });
         if (this.currentUser.roleUser === 'ROLE_USER') {
             this.equipo = this.currentUser.equipo.name;
-
         }
+        this.loadingTable = false;
     }
 
-    french() {
-        this.adapter.setLocale('fr');
+    onSubmit() {
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
+        this.getByRut();
     }
 
+    // convenience getter for easy acces to form fields
+    get f() { return this.form.controls; }
+    /*
     getErrorMessage() {
-        return this.email.hasError('required')
+        return this.inputRut.hasError('required')
             ? 'You must enter a value'
-            : this.email.hasError('email')
-                ? 'Not a valid email'
+            : this.inputRut.hasError('rut')
+                ? 'Not a valid rut'
                 : '';
     }
-
-    public async getByRut() {
-        this.rut = '91365596';
-        this.equipo = 'San Antonio Unido';
-        this._asistService.getByRut( this.rut, this.equipo, this.fec )
+    */
+    public getByRut() {
+        this.loadingProgressBar = true;
+        // this.rut = '91365596';
+        // this.equipo = 'San Antonio Unido';
+        this._asistService.getByRut( this.f.inputRut.value, this.equipo, this.f.fec.value )
             .subscribe((data: Element[]) => {
-                this.ELEMENT_DATA = data;
-                this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
-                this.dataSource.paginator = this.paginator;
+                if (data.length >= 0) {
+                    this.ELEMENT_DATA = data;
+                    this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
+                    this.dataSource.paginator = this.paginator;
+                    this.loadingProgressBar = false;
+                } else {
+                    this.loadingProgressBar = false;
+                    console.log('No se encontraron registros de asistencia.');
+                }
             });
     }
+
 }
