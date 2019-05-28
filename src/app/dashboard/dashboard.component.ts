@@ -12,9 +12,12 @@ import { AsistenteService } from '../_services/asistente';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements AfterViewInit, OnInit {
-    public currentUser: any;
-    public equipo: string;
-    public barChartData: any[];
+    currentUser: any;
+    equipo: string;
+    barChartData: any[];
+    allAsistYear: number;
+    totAsist: number;
+    today: number = Date.now();
 
     // Chart js
     subtitle: string;
@@ -97,6 +100,8 @@ export class DashboardComponent implements AfterViewInit, OnInit {
         if (this.currentUser.roleUser === 'ROLE_USER') {
             this.equipo = this.currentUser.equipo.name;
             this.getAllAsist();
+            this.getTotAsisCurrentYear();
+            this.getTotAsis();
         }
     }
 
@@ -125,7 +130,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
         sparklineLogin();
     }
 
-    public getAllAsist() {
+    getAllAsist() {
         const lasTyear = [];
         const currentTyear = [];
         this._asistService.getAsisByEquipo( this.equipo )
@@ -142,5 +147,21 @@ export class DashboardComponent implements AfterViewInit, OnInit {
             { data: currentTyear, label: '2019' }
         ];
         // [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86]
+    }
+
+    getTotAsisCurrentYear() {
+        this._asistService.getTotAsisCurrentYear( this.equipo )
+            .subscribe((result: number) => {
+                console.log(result);
+                this.allAsistYear = result;
+            });
+    }
+
+    getTotAsis() {
+        this._asistService.getTotAsis(this.equipo)
+            .subscribe((result: number) => {
+                console.log(result)
+                this.totAsist = result;
+            });
     }
 }

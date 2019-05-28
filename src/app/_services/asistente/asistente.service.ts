@@ -24,7 +24,16 @@ export class AsistenteService {
     getByRut(rut: string, equipo: string, fec?: string): Observable<any> {
         return this.http.post<Element[]>(`${environment.apiUrl}/getasis`, { rut, equipo, fec });
     }
-     /*
+
+    getTotAsisCurrentYear(equipo: string) {
+        return this.http.post(`${environment.apiUrl}/getasisyear`, { equipo });
+    }
+
+    getTotAsis(equipo: string) {
+        return this.http.post(`${environment.apiUrl}/getallasis`, { equipo });
+    }
+
+    /*
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/users/register`, user);
     }
