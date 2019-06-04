@@ -33,6 +33,11 @@ export class AsistenteService {
         return this.http.post(`${environment.apiUrl}/getallasis`, { equipo });
     }
 
+    /* current month */
+    getTotAsistMonth(equipo: string) {
+        return this.http.post(`${environment.apiUrl}/getasismonth`, { equipo });
+    }
+
     /*
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/users/register`, user);

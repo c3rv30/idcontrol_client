@@ -17,6 +17,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     barChartData: any[];
     allAsistYear: number;
     totAsist: number;
+    allAsistMonth: number;
     today: number = Date.now();
 
     // Chart js
@@ -102,6 +103,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
             this.getAllAsist();
             this.getTotAsisCurrentYear();
             this.getTotAsis();
+            this.getTotAsistMonth();
         }
     }
 
@@ -110,7 +112,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
         const sparklineLogin = function() {
             // spark count
             (<any>$('.spark-count')).sparkline(
-                [4, 5, 0, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9],
+                [4, 5, 2, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9],
                 {
                     type: 'bar',
                     width: '100%',
@@ -150,9 +152,8 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     }
 
     getTotAsisCurrentYear() {
-        this._asistService.getTotAsisCurrentYear( this.equipo )
+        this._asistService.getTotAsisCurrentYear(this.equipo)
             .subscribe((result: number) => {
-                console.log(result);
                 this.allAsistYear = result;
             });
     }
@@ -160,8 +161,14 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     getTotAsis() {
         this._asistService.getTotAsis(this.equipo)
             .subscribe((result: number) => {
-                console.log(result)
                 this.totAsist = result;
+            });
+    }
+
+    getTotAsistMonth() {
+        this._asistService.getTotAsistMonth(this.equipo)
+            .subscribe( (result: number) => {
+                this.allAsistMonth = result;
             });
     }
 }

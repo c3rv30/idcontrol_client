@@ -31,9 +31,9 @@
                 <!-- column -->
                 <div class="d-flex no-block align-items-center">
                     <div class="stats">
-                        <h3 class="text-white m-0">Asistentes</h3>
-                        <h6 class="text-white m-t-0">Abril 2019</h6>
-                        <h1 class="text-white m-0">1268</h1>
+                        <h3 class="text-white m-0">Asistentes mes actual</h3>
+                        <h6 class="text-white m-t-0">{{today | date:'MMMM'}}</h6>
+                        <h1 class="text-white m-0">{{allAsistMonth}}</h1>
                     </div>
                     <div class="spark-count ml-auto"></div>
                 </div>
@@ -49,7 +49,7 @@
                 <!-- column -->
                 <div class="d-flex no-block align-items-center">
                     <div class="stats">
-                        <h3 class="text-white m-0">Total Asistentes Año actual</h3>
+                        <h3 class="text-white m-0">Total asistentes año actual</h3>
                         <h6 class="text-white m-t-0">{{today | date:'yyyy'}}</h6>
                         <h1 class="text-white m-0">{{allAsistYear}}</h1>
                     </div>
@@ -67,7 +67,7 @@
                 <!-- column -->
                 <div class="d-flex no-block align-items-center">
                     <div class="stats">
-                        <h3 class="text-white m-0">Total Asistentes hasta la fecha</h3>
+                        <h3 class="text-white m-0">Total asistentes hasta la fecha</h3>
                         <h6 class="text-white m-t-0">Total general</h6>
                         <h1 class="text-white m-0">{{totAsist}}</h1>
                     </div>
