@@ -29,6 +29,10 @@ export const AppRoutes: Routes = [
         loadChildren: './asistentes/asistentes.module#AsistentesModule'
       },
       {
+        path: 'blacklist',
+        loadChildren: './blackList/blackList.module#BlackListModule'
+      },
+      {
         path: 'icons',
         loadChildren: './icons/mat-icon.module#IconsModule'
       }

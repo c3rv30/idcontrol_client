@@ -91,7 +91,7 @@ export class AsistentesComponent implements AfterViewInit, OnInit {
     ngOnInit(): void {
         this.form = this.fb.group({
             inputRut: [null, Validators.compose([Validators.required])],
-            fec: [null],
+            fec: [null, Validators.compose([])],
         });
         if (this.currentUser.roleUser === 'ROLE_USER') {
             this.equipo = this.currentUser.equipo.name;
@@ -122,13 +122,17 @@ export class AsistentesComponent implements AfterViewInit, OnInit {
         this.loadingProgressBar = true;
         // this.rut = '91365596';
         // this.equipo = 'San Antonio Unido';
-        this._asistService.getByRut( this.f.inputRut.value, this.equipo, this.f.fec.value )
+        
+        console.log('Fecha DatePicker: ', this.f.fec.value);
+
+        this._asistService.getByRut( this.f.inputRut.value, this.equipo, '2019-06-03' )
             .subscribe((data: Element[]) => {
                 if (data.length >= 0) {
                     this.ELEMENT_DATA = data;
                     this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
                     this.dataSource.paginator = this.paginator;
                     this.loadingProgressBar = false;
+                    this.loadingTable = true;
                 } else {
                     this.loadingProgressBar = false;
                     console.log('No se encontraron registros de asistencia.');

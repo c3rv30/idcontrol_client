@@ -1,10 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- ============================================================== -->
+<!-- Card Grid-->
+<!-- ============================================================== -->
+<div fxLayout="row wrap">
+    <div fxFlex.gt-sm="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>Buscar en lista negra por Rut</mat-card-title>
+                <!-- ============================================================== -->
+                <!-- column -->
+                <!-- ============================================================== -->
+                <form class="basic-form">
+                    <div fxLayout="row wrap">
+                        <!-- column -->
+                        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+                            <mat-form-field>
+                                <input matInput minlength="8" placeholder="Ingrese rut" required>
+                            </mat-form-field>
+                            <!--<small *ngIf="form.controls['inputRut'].hasError('required') && form.controls['inputRut'].touched" class="text-danger support-text">Rut es requerido.</small>-->
+                        </div>
+                        <!-- /column -->
 
-</body>
-</html>
+                        <!-- column -->
+                        <div fxFlex.gt-sm="100" fxFlex="100">
+                            <button type="submit" mat-raised-button color="primary">Buscar</button>
+                            <!-- [disabled]="!form.valid"   -->
+                        </div>
+                        <!-- /column -->
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- PROGRESS BAR -->
+<!-- ============================================================== -->
+<div fxLayout="row wrap" *ngIf="">
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>
+                <mat-progress-bar mode="indeterminate" value="40"></mat-progress-bar>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- PAGINATION TABLE -->
+<!-- ============================================================== -->
+<div fxLayout="row wrap" *ngIf="">
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>Listado de Asistencias</mat-card-title>
+                <div class="responsive-table">
+                    <mat-table #table [dataSource]="">
+
+                        <!-- Symbol Column
+                        <ng-container matColumnDef="_id">
+                            <mat-header-cell *matHeaderCellDef> _id </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element._id}} </mat-cell>
+                        </ng-container>
+                        -->
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="rut">
+                            <mat-header-cell *matHeaderCellDef> Rut </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.rut}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="equipo">
+                            <mat-header-cell *matHeaderCellDef> Equipo </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.equipo}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="fecha">
+                            <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.fecha}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Symbol Column
+                        <ng-container matColumnDef="symbol">
+                            <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+                        </ng-container>
+                        -->
+
+                        <mat-header-row *matHeaderRowDef=""></mat-header-row>
+                        <mat-row *matRowDef=""></mat-row>
+                    </mat-table>
+
+                    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+                    </mat-paginator>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

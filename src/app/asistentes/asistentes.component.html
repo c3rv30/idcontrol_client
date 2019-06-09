@@ -22,7 +22,7 @@
 
                         <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
                             <mat-form-field>
-                                <input matInput [matDatepicker]="picker" placeholder="Seleccione fecha de ingreso a partido">
+                                <input matInput [matDatepicker]="picker" placeholder="Seleccione fecha de ingreso a partido" [formControl]="form.controls['fec']">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
