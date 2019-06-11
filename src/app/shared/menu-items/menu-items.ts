@@ -45,12 +45,12 @@ const MENUITEMS = [
     type: 'link',
     icon: 'filter_list'
   },
-  // Estadisticas
+  // Exportar
   {
-    state: 'estadisticas',
-    name: 'Estadisticas',
+    state: 'export',
+    name: 'Exportar',
     type: 'link',
-    icon: 'show_chart'
+    icon: 'import_export'
   },
   {
     state: 'material',

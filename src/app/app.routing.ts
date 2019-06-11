@@ -33,6 +33,10 @@ export const AppRoutes: Routes = [
         loadChildren: './blackList/blackList.module#BlackListModule'
       },
       {
+        path: 'export',
+        loadChildren: './exportarAsis/exportasis.module#ExportModule'
+      },
+      {
         path: 'icons',
         loadChildren: './icons/mat-icon.module#IconsModule'
       }

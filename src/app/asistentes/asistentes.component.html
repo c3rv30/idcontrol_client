@@ -43,15 +43,35 @@
 <!-- ============================================================== -->
 <!-- PROGRESS BAR -->
 <!-- ============================================================== -->
-<div fxLayout="row wrap" *ngIf="loadingProgressBar">
+<!--<div fxLayout="row wrap" *ngIf="loadingProgressBar">
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>-->
+                <mat-progress-bar mode="indeterminate" value="40" *ngIf="loadingProgressBar"></mat-progress-bar>
+           <!-- </mat-card-content>
+        </mat-card>
+    </div>
+</div>-->
+
+<!-- ============================================================== -->
+<!-- RESULT MESSAGE -->
+<!-- ============================================================== -->
+<div fxLayout="row wrap" *ngIf="resultMessage">
     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
             <mat-card-content>
-                <mat-progress-bar mode="indeterminate" value="40"></mat-progress-bar>
+                <!-- Row -->
+                <div fxLayout="row" fxLayoutWrap="wrap">
+                    <!-- column -->
+                    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100">
+                        <h4>No se encontraron resultados en la busqueda</h4>  <!--SMARTHUB TECHNOLOGIES-->
+                    </div>
+                </div>
             </mat-card-content>
         </mat-card>
     </div>
 </div>
+
 <!-- ============================================================== -->
 <!-- PAGINATION TABLE -->
 <!-- ============================================================== -->

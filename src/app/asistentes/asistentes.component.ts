@@ -33,6 +33,8 @@ export class AsistentesComponent implements AfterViewInit, OnInit {
     loadingProgressBar: boolean;
     // table
     loadingTable: boolean;
+    //
+    resultMessage: boolean;
 
     // For form validator
     // inputRut = new FormControl('', [Validators.required]);
@@ -91,12 +93,13 @@ export class AsistentesComponent implements AfterViewInit, OnInit {
     ngOnInit(): void {
         this.form = this.fb.group({
             inputRut: [null, Validators.compose([Validators.required])],
-            fec: [null, Validators.compose([])],
+            fec: ['', Validators.compose([])],
         });
         if (this.currentUser.roleUser === 'ROLE_USER') {
             this.equipo = this.currentUser.equipo.name;
         }
         this.loadingTable = false;
+        this.resultMessage = false;
     }
 
     onSubmit() {
@@ -125,17 +128,20 @@ export class AsistentesComponent implements AfterViewInit, OnInit {
         
         console.log('Fecha DatePicker: ', this.f.fec.value);
 
-        this._asistService.getByRut( this.f.inputRut.value, this.equipo, '2019-06-03' )
+        this._asistService.getByRut( this.f.inputRut.value, this.equipo, this.f.fec.value )
             .subscribe((data: Element[]) => {
                 if (data.length >= 0) {
+                    this.resultMessage = false;
                     this.ELEMENT_DATA = data;
                     this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
                     this.dataSource.paginator = this.paginator;
                     this.loadingProgressBar = false;
                     this.loadingTable = true;
                 } else {
-                    this.loadingProgressBar = false;
                     console.log('No se encontraron registros de asistencia.');
+                    this.loadingProgressBar = false;
+                    this.loadingTable = false;
+                    this.resultMessage = true;
                 }
             });
     }
